@@ -1,0 +1,87 @@
+########################################
+# MonoGame / .NET / VS Code .gitignore #
+########################################
+
+###############
+# Build output
+###############
+bin/
+obj/
+[Bb]uild/
+[Bb]in/
+[Oo]bj/
+*.exe
+*.dll
+*.pdb
+
+#####################
+# MonoGame Pipeline #
+#####################
+# Intermediate & output folders created by MGCB or mgcb-editor
+Content/bin/
+Content/obj/
+
+# Temporary / lock files created while the content-pipeline tool is running
+*.mgcb.tmp
+*.mgcb.mgos
+
+# Compiled XNBs (optional: comment-out if you prefer to version them)
+*.xnb
+
+##################
+# NuGet packages #
+##################
+# You almost never want these in source control.
+*.nupkg
+*.snupkg
+packages/
+*.nuget.props
+*.nuget.targets
+project.assets.json
+# Legacy lock file
+packages.lock.json
+
+##########################
+# IDE & workspace files  #
+##########################
+# Visual Studio Code
+.vscode/*
+!.vscode/*.json           # keep shared launch/tasks/settings if you want
+.history/
+
+# Visual Studio / JetBrains Rider
+.vs/
+.idea/
+
+# Solution-user data
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+################
+# Build system #
+################
+# MSBuild / CSC
+*.cache
+*.tlog
+*.log
+*.tmp
+*.bak
+
+#############
+# OS cruft  #
+#############
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+Desktop.ini
+
+####################
+# Misc. extensions #
+####################
+*.orig          # merge-conflict backups
+*.old
+*.swp           # vim swap
+*.sln.ide

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WorldOfSkyfire")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+405e76d75866e94e7b68eddd85c2f374e65d93ed")]
 [assembly: System.Reflection.AssemblyProductAttribute("WorldOfSkyfire")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WorldOfSkyfire")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
