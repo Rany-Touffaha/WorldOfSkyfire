@@ -2,12 +2,18 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+using System.Collections.Generic;
+
 namespace WorldOfSkyfire;
 
 public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
+
+    Entity player;
+    List<Entity> enemies;
+    Texture2D texture;
 
     public Game1()
     {
@@ -19,6 +25,15 @@ public class Game1 : Game
     protected override void Initialize()
     {
         // TODO: Add your initialization logic here
+        player = EntityFactory.CreateEntity(EntityType.Player);
+        enemies = new List<Entity>();
+
+        for (int i = 0; i < 10; i++)
+        {
+            int type = (i % 2 == 0) ? 2 : 1;
+            Entity enemy = EntityFactory.CreateEntity((EntityType)type);
+            enemies.Add(enemy);
+        }
 
         base.Initialize();
     }
@@ -28,6 +43,8 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         // TODO: use this.Content to load your game content here
+        texture = new Texture2D(GraphicsDevice, 1, 1);
+        texture.SetData(new[] { Color.White });
     }
 
     protected override void Update(GameTime gameTime)
@@ -45,6 +62,13 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
         // TODO: Add your drawing code here
+        _spriteBatch.Begin();
+        player.Draw(_spriteBatch, texture);
+        foreach (var entity in enemies)
+        {
+            entity.Draw(_spriteBatch, texture);
+        }
+        _spriteBatch.End();
 
         base.Draw(gameTime);
     }
