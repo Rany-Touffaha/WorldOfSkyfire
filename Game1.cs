@@ -17,6 +17,11 @@ public class Game1 : Game
     AbstractEntityFactory ghoulFactory = new GhoulEnemyFactory();
     Entity ghoulEnemy;
 
+    private ICommand moveUp;
+    private ICommand moveDown;
+    private ICommand moveLeft;
+    private ICommand moveRight;
+
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -44,6 +49,11 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+        moveUp = new MovePlayerCommand((Player)player, new Vector2(0, -1));
+        moveLeft = new MovePlayerCommand((Player)player, new Vector2(-1, 0));
+        moveDown = new MovePlayerCommand((Player)player, new Vector2(0, 1));
+        moveRight = new MovePlayerCommand((Player)player, new Vector2(1, 0));
+
         texture = new Texture2D(GraphicsDevice, 1, 1);
         texture.SetData(new[] { Color.White });
     }
@@ -54,6 +64,13 @@ public class Game1 : Game
             Exit();
 
         ghoulEnemy.Update(gameTime);
+
+        var keyboardState = Keyboard.GetState();
+
+        if (keyboardState.IsKeyDown(Keys.W)) moveUp.Execute();
+        if (keyboardState.IsKeyDown(Keys.A)) moveLeft.Execute();
+        if (keyboardState.IsKeyDown(Keys.S)) moveDown.Execute();
+        if (keyboardState.IsKeyDown(Keys.D)) moveRight.Execute();
 
         base.Update(gameTime);
     }

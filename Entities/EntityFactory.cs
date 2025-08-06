@@ -7,7 +7,7 @@ namespace WorldOfSkyfire
     {
         public static Entity CreateEntity()
         {
-            return new Player
+            return new Player(new Vector2(100, 100))
             {
 
             };
@@ -18,7 +18,7 @@ namespace WorldOfSkyfire
             switch (entity)
             {
                 case EntityType.Player:
-                    return new Player { };
+                    return new Player(new Vector2(100, 100)) { };
                 case EntityType.SkeletonEnemy:
                     return new SkeletonEnemy { };
                 case EntityType.ZombieEnemy:

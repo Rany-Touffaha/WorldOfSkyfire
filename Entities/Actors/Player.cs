@@ -6,9 +6,9 @@ namespace WorldOfSkyfire
 {
     public class Player : Entity
     {
-        public Player()
+        public Player(Vector2 startPosition)
         {
-            Position = new Vector2(100, 100);
+            Position = startPosition;
             Size = new Vector2(50, 50);
             Color = Color.Green;
         }
