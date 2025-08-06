@@ -14,6 +14,8 @@ public class Game1 : Game
     Entity player;
     List<Entity> enemies;
     Texture2D texture;
+    AbstractEntityFactory ghoulFactory = new GhoulEnemyFactory();
+    Entity ghoulEnemy;
 
     public Game1()
     {
@@ -24,8 +26,8 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        // TODO: Add your initialization logic here
         player = EntityFactory.CreateEntity(EntityType.Player);
+        ghoulEnemy = ghoulFactory.CreateEntity();
         enemies = new List<Entity>();
 
         for (int i = 0; i < 10; i++)
@@ -42,7 +44,6 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        // TODO: use this.Content to load your game content here
         texture = new Texture2D(GraphicsDevice, 1, 1);
         texture.SetData(new[] { Color.White });
     }
@@ -52,7 +53,7 @@ public class Game1 : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        // TODO: Add your update logic here
+        ghoulEnemy.Update(gameTime);
 
         base.Update(gameTime);
     }
@@ -61,9 +62,9 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        // TODO: Add your drawing code here
         _spriteBatch.Begin();
         player.Draw(_spriteBatch, texture);
+        ghoulEnemy.Draw(_spriteBatch, texture);
         foreach (var entity in enemies)
         {
             entity.Draw(_spriteBatch, texture);
