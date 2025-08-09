@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using System;
 using System.Collections.Generic;
 
 namespace WorldOfSkyfire;
@@ -11,7 +11,7 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
-    Entity player;
+    private Player player;
     List<Entity> enemies;
     Texture2D texture;
     AbstractEntityFactory ghoulFactory = new GhoulEnemyFactory();
@@ -24,6 +24,9 @@ public class Game1 : Game
 
     readonly GameStateService stateService = new GameStateService();
     GameState lastState;
+
+    private HealthBar healthBar;
+    private IDisposable healthBarSub;
 
     public Game1()
     {
@@ -89,7 +92,13 @@ public class Game1 : Game
     void StartPlaying()
     {
         // Create player
-        player = EntityFactory.CreateEntity(EntityType.Player);
+        player = (Player)EntityFactory.CreateEntity(EntityType.Player);
+        healthBar = new HealthBar(texture,
+                           new Vector2(20, 20),
+                           player.MaxHealth,
+                           width: 200, height: 12);
+
+        healthBarSub = player.Subscribe(healthBar);
 
         //Add player movement
         moveUp = new MovePlayerCommand((Player)player, new Vector2(0, -1));
@@ -116,6 +125,9 @@ public class Game1 : Game
     {
         enemies?.Clear();
         player = null;
+        healthBar = null;
+        healthBarSub?.Dispose();
+        healthBarSub = null;
     }
 
     void HandleGameInput(KeyboardState keyboardState)
@@ -144,6 +156,7 @@ public class Game1 : Game
                 DrawTextBox("Press ENTER to start");
                 break;
             case GameState.Playing:
+                healthBar?.Draw(_spriteBatch);
                 player?.Draw(_spriteBatch, texture);
                 foreach (var enemy in enemies)
                     enemy.Draw(_spriteBatch, texture);
@@ -152,9 +165,6 @@ public class Game1 : Game
                 DrawTextBox("Game Over – press Enter to restart");
                 break;
         }
-
-
-
 
         _spriteBatch.End();
         base.Draw(gameTime);
