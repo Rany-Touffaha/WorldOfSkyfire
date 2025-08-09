@@ -7,6 +7,7 @@ namespace WorldOfSkyfire
     {
         private readonly Player _player;
         private Vector2 _direction;
+        private const float Speed = 2f;
 
         public MovePlayerCommand(Player player, Vector2 direction)
         {
@@ -14,9 +15,6 @@ namespace WorldOfSkyfire
             _direction = direction;
         }
 
-        public void Execute()
-        {
-            _player.Position += _direction;
-        }
+        public void Execute() => _player.Position += _direction * Speed;
     }
 }
