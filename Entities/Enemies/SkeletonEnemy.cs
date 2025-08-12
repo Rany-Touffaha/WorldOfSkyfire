@@ -1,31 +1,31 @@
 using System;
-using System.Data;
-using System.Reflection.Metadata;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace WorldOfSkyfire
 {
-    public class SkeletonEnemy : Entity
+    public class SkeletonEnemy : EnemyBase
     {
-        public SkeletonEnemy()
+        public SkeletonEnemy() : base(new DefensiveBehavior(6))
         {
-            Random rng = new Random();
-            float x = rng.Next(50, 750);
-            float y = rng.Next(50, 450);
-
-            Position = new Vector2(x, y);
+            var rng = new Random();
+            Position = new Vector2(rng.Next(50, 750), rng.Next(50, 450));
             Size = new Vector2(50, 50);
             Color = Color.Yellow;
-        }
 
-        public override void Update(GameTime gameTime)
-        {
-            
+            //Stats
+            MaxHealth = Health = 60;
+            Speed = 1.2f;
+            AttackRange = 45f;
+            AttackCooldown = 0.9f;
+
+            //Behavior
+            LowHealthFrac = 0.30f;
+            AggressiveWithin = 55f;
+            PrefersRanged = false;
+            AggressiveDamage = 14;
+            DefensiveDamage = 6;
         }
-        public override void Draw(SpriteBatch spriteBatch, Texture2D texture)
-        {
-            spriteBatch.Draw(texture, new Rectangle(Position.ToPoint(), Size.ToPoint()), Color);
-        }
+        
+        public override string ToString() => "Skeleton";
     }
 }

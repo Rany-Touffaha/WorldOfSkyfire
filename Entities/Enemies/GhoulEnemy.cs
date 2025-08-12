@@ -1,38 +1,31 @@
 using System;
-using System.Data;
-using System.Reflection.Metadata;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace WorldOfSkyfire
 {
-    public class GhoulEnemy : Entity
+    public class GhoulEnemy : EnemyBase
     {
-        public GhoulEnemy()
+        public GhoulEnemy() : base(new AggressiveBehavior(18))
         {
-            Random rng = new Random();
-            float x = rng.Next(50, 750);
-            float y = rng.Next(50, 450);
-
-            Position = new Vector2(x, y);
+            var rng = new Random();
+            Position = new Vector2(rng.Next(50, 750), rng.Next(50, 450));
             Size = new Vector2(50, 50);
             Color = Color.Blue;
+
+            //Stats
+            MaxHealth = Health = 40;
+            Speed = 1.8f;
+            AttackRange = 35f;
+            AttackCooldown = 0.5f;
+
+            //Behavior
+            LowHealthFrac = 0.30f;
+            AggressiveWithin = 45f;
+            PrefersRanged = true;
+            AggressiveDamage = 18;
+            DefensiveDamage = 6;
         }
 
-        public override void Update(GameTime gameTime)
-        {
-            if (Color == Color.Black)
-            {
-                Position = new Vector2(Position.X - 1.0f, Position.Y);
-            }
-            else
-            {
-                Position = new Vector2(Position.X + 1.0f, Position.Y);
-            }
-        }
-        public override void Draw(SpriteBatch spriteBatch, Texture2D texture)
-        {
-            spriteBatch.Draw(texture, new Rectangle(Position.ToPoint(), Size.ToPoint()), Color);
-        }
+        public override string ToString() => "Ghoul";
     }
 }

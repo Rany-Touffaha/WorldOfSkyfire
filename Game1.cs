@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace WorldOfSkyfire;
 
@@ -116,9 +117,11 @@ public class Game1 : Game
             enemies.Add(enemy);
         }
 
-        ghoulEnemy = ghoulFactory.CreateEntity();
+        var ghoulEnemy = ghoulFactory.CreateEntity();
         enemies.Add(ghoulEnemy);
 
+        foreach (var enemy in enemies.OfType<EnemyBase>())
+            enemy.SetTarget(player);
     }
 
     void StopPlaying()

@@ -1,31 +1,31 @@
 using System;
-using System.Data;
-using System.Reflection.Metadata;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace WorldOfSkyfire
 {
-    public class ZombieEnemy : Entity
+    public class ZombieEnemy : EnemyBase
     {
-        public ZombieEnemy()
+        public ZombieEnemy() : base(new AggressiveBehavior(10))
         {
-            Random rng = new Random();
-            float x = rng.Next(50, 750);
-            float y = rng.Next(50, 450);
-
-            Position = new Vector2(x, y);
+            var rng = new Random();
+            Position = new Vector2(rng.Next(50, 750), rng.Next(50, 450));
             Size = new Vector2(50, 50);
             Color = Color.Red;
-        }
 
-        public override void Update(GameTime gameTime)
-        {
-            
+            //Stats
+            MaxHealth = Health = 90;
+            Speed = 0.9f;
+            AttackRange = 40f;
+            AttackCooldown = 0.8f;
+
+            //Behavior
+            LowHealthFrac = 0.20f;
+            AggressiveWithin = 50f;
+            PrefersRanged = false;
+            AggressiveDamage = 10;
+            DefensiveDamage = 5;
         }
-        public override void Draw(SpriteBatch spriteBatch, Texture2D texture)
-        {
-            spriteBatch.Draw(texture, new Rectangle(Position.ToPoint(), Size.ToPoint()), Color);
-        }
+        
+        public override string ToString() => "Zombie";
     }
 }
