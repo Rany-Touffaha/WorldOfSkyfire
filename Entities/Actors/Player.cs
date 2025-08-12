@@ -13,6 +13,7 @@ namespace WorldOfSkyfire
         private readonly HashSet<IObserver<int>> observers = [];
         private int health;
         public int MaxHealth { get; private set; } = 100;
+        public Inventory<IItem> Inventory { get; } = new();
 
         public Player(Vector2 startPosition)
         {
